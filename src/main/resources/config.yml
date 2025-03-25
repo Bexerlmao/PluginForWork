@@ -1,0 +1,33 @@
+join:
+  title:
+    message: "§5欢迎进入服务器"
+    fadeIn: 20
+    stay: 60
+    fadeOut: 20
+  message: "§6欢迎加入服务器"
+  sound:
+    name: "minecraft:entity.player.levelup"
+    volume: 1.0
+    pitch: 1.0
+
+
+region:
+  - id: 1
+    world: "CraftWorld{name=world}"
+    min:
+      x: 100
+      z: 100
+    max:
+      x: 150
+      z: 150
+
+rewards:
+  - material: DIAMOND
+    min: 1
+    max: 3
+  - material: GOLDEN_APPLE
+    min: 1
+    max: 5
+  - material: EMERALD
+    min: 2
+    max: 5

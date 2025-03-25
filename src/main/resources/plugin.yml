@@ -1,0 +1,10 @@
+name: PluginForWork
+version: '1.0-SNAPSHOT'
+main: pluginForWork.PluginForWork
+api-version: '1.21'
+author: "Bexerlmao"
+commands:  # 新增命令声明
+  tip:  # 必须和 getCommand("tip") 中的名称一致
+    description: 领取随机奖励
+    usage: /tip
+    aliases: [奖励]
