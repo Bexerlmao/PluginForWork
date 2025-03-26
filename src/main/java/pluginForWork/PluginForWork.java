@@ -13,8 +13,6 @@ public final class PluginForWork extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
-        getServer().getPluginManager().registerEvents(new PlayerPosListener(this), this);
-
         getCommand("tip").setExecutor(new TipCommand(this));
 
     }

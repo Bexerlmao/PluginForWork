@@ -1,5 +1,6 @@
 package pluginForWork;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -32,21 +33,44 @@ public class TipCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
+        Location pos = player.getLocation();
+
+        List<?> regions = plugin.getConfig().getList("region");
+
+        boolean isInRegion = regions.stream().anyMatch(region -> {
+
+            if (region instanceof Map) {
+                Map<String, Object> regoinInfos = (Map<String, Object>) region;
 
 
-        Byte playerState = player.getPersistentDataContainer().get(
-                new NamespacedKey(plugin, "PlayerInRegion"),
-                PersistentDataType.BYTE
-        );
+                if (!String.valueOf(pos.getWorld()).equals(regoinInfos.get("world"))) {
+                    return false;
+                }
+
+                Map<String, Integer> min = (Map<String, Integer>) regoinInfos.get("min");
+                Map<String, Integer> max = (Map<String, Integer>) regoinInfos.get("max");
+
+                int minX = min.get("x");
+                int minZ = min.get("z");
+                int maxX = max.get("x");
+                int maxZ = max.get("z");
 
 
-        if (playerState == null || playerState != 1) {
+                return pos.getX() >= minX && pos.getX() <= maxX &&
+                        pos.getZ() >= minZ && pos.getZ() <= maxZ;
+
+            }
+            return false;
+        });
+
+        if (!isInRegion) {
             player.sendMessage("§c你必须进入特定区域才能使用这个命令！");
             return true;
         }
 
         List<?> rewards = plugin.getConfig().getList("rewards");
         Object randomReward = rewards.get(random.nextInt(rewards.size()));
+
 
         if (randomReward instanceof Map) {
             Map<String, Object> section = (Map<String, Object>) randomReward;
